@@ -1,0 +1,26 @@
+name: cetaf-registry-ipt
+
+networks:
+  cetaf-net:
+    external: true
+
+services:
+  ipt:
+    build: .
+    container_name: cetaf-ipt
+    restart: unless-stopped
+    networks:
+      - cetaf-net
+    environment:
+      IPT_DATA_DIR: /srv/ipt
+    volumes:
+      - ipt_data:/srv/ipt
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ipt.rule=Host(`ipt.cetaf.dev`)
+      - traefik.http.routers.ipt.entrypoints=websecure
+      - traefik.http.routers.ipt.tls=true
+      - traefik.http.services.ipt.loadbalancer.server.port=8080
+
+volumes:
+  ipt_data:

@@ -13,3 +13,7 @@
 /eml*.xml
 /res1
 /target
+.github
+build
+package
+node_modules
